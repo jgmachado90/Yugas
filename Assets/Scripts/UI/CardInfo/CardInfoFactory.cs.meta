@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a0b1073688c501c45adf7b5c6cdfa0a7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardData: {fileID: 11400000, guid: 71290060b79f52d478c9f5cda14547fb, type: 2}
+  - cardSpriteData: {fileID: 11400000, guid: 10e8a7d87b5f3ff489770530ff0cedf7, type: 2}
+  - cardNameText: {instanceID: 0}
+  - descriptionText: {instanceID: 0}
+  - atkText: {instanceID: 0}
+  - defText: {instanceID: 0}
+  - attributeImage: {instanceID: 0}
+  - cardTypeImage: {instanceID: 0}
+  - guardianStarImage1: {instanceID: 0}
+  - guardianStarImage2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

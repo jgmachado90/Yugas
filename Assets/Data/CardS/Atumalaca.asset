@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83fde1ac1573b1743800e32a4980d8c8, type: 3}
+  m_Name: Atumalaca
+  m_EditorClassIdentifier: 
+  cardName: Atumalaca
+  attribute: 0
+  description: ATUMALACA EQUINOLE TICULA TIC TIC TIC TA HAHAHAHAHAH.
+  level: 3
+  primaryStar: 0
+  secondaryStar: 6
+  cardType: 0
+  monsterType: 6
+  atk: 800
+  def: 600
+  cardImage: {fileID: 21300000, guid: 339914c1b65c7114fa504170565a2c7f, type: 3}

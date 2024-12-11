@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66385124de2d6c40848652c683e562f, type: 3}
+  m_Name: CardSpriteData
+  m_EditorClassIdentifier: 
+  attributeSprites:
+  - key: 0
+    sprite: {fileID: -718515816, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 1
+    sprite: {fileID: -1914769805, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 2
+    sprite: {fileID: 1770433340, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 3
+    sprite: {fileID: 826758366, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 4
+    sprite: {fileID: -997904550, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 5
+    sprite: {fileID: -345285108, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 6
+    sprite: {fileID: -523857572, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 7
+    sprite: {fileID: -523857572, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 8
+    sprite: {fileID: -523857572, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  cardTypeSprites:
+  - key: 0
+    sprite: {fileID: -1880866473, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 1
+    sprite: {fileID: -303033800, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 2
+    sprite: {fileID: 1922616201, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 3
+    sprite: {fileID: -2019762041, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  guardianStarSprites:
+  - key: 0
+    sprite: {fileID: -932427162, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 1
+    sprite: {fileID: 173385394, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 2
+    sprite: {fileID: 1081287528, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 3
+    sprite: {fileID: 19015546, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 4
+    sprite: {fileID: -1064279614, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 5
+    sprite: {fileID: 1841442284, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 6
+    sprite: {fileID: -488973036, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 7
+    sprite: {fileID: 1395194325, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 8
+    sprite: {fileID: 1286426940, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  - key: 9
+    sprite: {fileID: -2053066182, guid: 2d2d2b9e5881f38479f777723fc8cfc5, type: 3}
+  handCardTypeSprites:
+  - key: 0
+    sprite: {fileID: 932754089, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 1
+    sprite: {fileID: 1305454085, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 2
+    sprite: {fileID: -1657430630, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
+  - key: 3
+    sprite: {fileID: 698957572, guid: ebc0c55a34bdff64fa302b3724d60c11, type: 3}
