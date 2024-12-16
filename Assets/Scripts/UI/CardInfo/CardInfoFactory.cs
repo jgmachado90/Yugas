@@ -73,14 +73,40 @@ public class CardInfoFactory : MonoBehaviour
 
         cardInfo.SetLevel(cardData.level);
 
+        StartCoroutine("CardGettingClose");
+    }
+
+    public IEnumerator CardGettingClose()
+    {
+        cardInfo.cardBackAnimation.gameObject.SetActive(true);
+        float duration = 0.7f;
+        Vector3 cardStart = cardInfo.Cardp0.position;
+        Vector3 cardEnd = cardInfo.Cardp1.position;
+        float elapsedTime = 0f;
+
+        Vector3 cardCurrentPosition = cardInfo.cardRectTransform.position;
+        Vector3 cardInfoCurrentPosition = cardInfo.cardInfoTransform.position;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration); // Normalize time to [0, 1]
+
+            // Apply easing function for smoother animation (ease out).
+            t = t * t * (3f - 2f * t);
+
+            cardInfo.cardRectTransform.position = Vector3.Lerp(cardInfo.Cardp0.position, cardInfo.Cardp1.position, t);
+            cardInfo.cardInfoTransform.position = Vector3.Lerp(cardInfo.Infop0.position, cardInfo.Infop1.position, t);
+
+            yield return null;
+        }
         StartCoroutine("CardDetailsAnimation");
     }
 
     public IEnumerator CardDetailsAnimation()
     {
-        cardInfo.cardBackAnimation.gameObject.SetActive(true);
         RectTransform rectTransform = cardInfo.cardTypeImage.rectTransform;
-        float duration = 0.5f;
+        float duration = 0.3f;
         int startX = 1;
         int endX = 0;
         float elapsedTime = 0f;
