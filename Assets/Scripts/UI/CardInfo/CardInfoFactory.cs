@@ -73,45 +73,51 @@ public class CardInfoFactory : MonoBehaviour
 
         cardInfo.SetLevel(cardData.level);
 
-        //StartCoroutine("CardDetailsAnimation");
+        StartCoroutine("CardDetailsAnimation");
     }
-
 
     public IEnumerator CardDetailsAnimation()
     {
-        // Set up the scale animation variables
-        Vector3 originalScale = transform.localScale;
-        Vector3 targetScale = new Vector3(1, 1, 0); // Scaling only the X-axis to 0
-        float duration = 0.5f; // Half a second for the scale animation
-        float elapsedTime = 0;
+        cardInfo.cardBackAnimation.gameObject.SetActive(true);
+        RectTransform rectTransform = cardInfo.cardTypeImage.rectTransform;
+        float duration = 0.5f;
+        int startX = 1;
+        int endX = 0;
+        float elapsedTime = 0f;
 
-        // Shrink the card background (1 -> 0)
+        // Get the current scale
+        Vector3 currentScale = rectTransform.localScale;
+
         while (elapsedTime < duration)
         {
+            // Lerp the scale
+            float newX = Mathf.Lerp(startX, endX, elapsedTime / duration);
+            rectTransform.localScale = new Vector3(newX, currentScale.y, currentScale.z);
+
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            cardInfo.cardBackAnimation.transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
-            yield return null; // Wait for the next frame
+            yield return null; // Wait until the next frame
         }
 
-        cardInfo.cardBackAnimation.transform.localScale = targetScale;
-        cardInfo.cardBackAnimation.enabled = false; // Disable the animation
+        rectTransform.localScale = new Vector3(endX, currentScale.y, currentScale.z);
+        cardInfo.cardBackAnimation.gameObject.SetActive(false);
 
-        // Reset elapsedTime for the reverse animation
-        elapsedTime = 0;
+        startX = 0;
+        endX = 1;
+        elapsedTime = 0f;
+        currentScale = rectTransform.localScale;
 
-        // Expand the card background back to original scale (0 -> 1)
         while (elapsedTime < duration)
         {
+            // Lerp the scale
+            float newX = Mathf.Lerp(startX, endX, elapsedTime / duration);
+            rectTransform.localScale = new Vector3(newX, currentScale.y, currentScale.z);
+
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
-            cardInfo.cardBackAnimation.transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
-            yield return null; // Wait for the next frame
+            yield return null; // Wait until the next frame
         }
 
-        cardInfo.cardBackAnimation.transform.localScale = originalScale; // Ensure it finishes at the original scale
-        yield return null;  
     }
+    
 
     private void EnableMonsterLabels()
     {
