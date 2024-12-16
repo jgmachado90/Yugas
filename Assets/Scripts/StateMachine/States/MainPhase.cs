@@ -9,7 +9,7 @@ public class MainPhase : IState
 
     public void Enter()
     {
-        
+        stateMachineManager.TriggerMainPhaseInitialization();
     }
 
     public void Execute()

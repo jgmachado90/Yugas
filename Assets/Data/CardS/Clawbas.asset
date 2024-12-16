@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83fde1ac1573b1743800e32a4980d8c8, type: 3}
-  m_Name: Atumalaca
+  m_Name: Clawbas
   m_EditorClassIdentifier: 
-  cardName: Atumalaca
-  attribute: 0
-  description: ATUMALACA EQUINOLE TICULA TIC TIC TIC TA HAHAHAHAHAH.
-  level: 4
-  primaryStar: 2
-  secondaryStar: 3
+  cardName: Clawbas
+  attribute: 5
+  description: I'm a champion!
+  level: 3
+  primaryStar: 4
+  secondaryStar: 8
   cardType: 0
   monsterType: 6
   atk: 800
-  def: 600
-  cardImage: {fileID: 21300000, guid: 339914c1b65c7114fa504170565a2c7f, type: 3}
+  def: 400
+  cardImage: {fileID: 21300000, guid: ce57a2ad8b75e9e439d0f5d889953692, type: 3}

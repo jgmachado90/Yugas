@@ -21,7 +21,7 @@ public class InputController : MonoBehaviour
 
     private void SetMainPhaseInputHandler()
     {
-        SetInputHandler(new MainPhaseInputHandler());
+        SetInputHandler(new MainPhaseInputHandler(GameManager.Instance.selectorManager));
     }
 
     private void SetBattleInputHandler()

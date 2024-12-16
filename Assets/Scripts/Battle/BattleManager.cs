@@ -21,6 +21,8 @@ public class BattleManager : MonoBehaviour
 
     public DeckData enemyDeck;
 
+    public int handLimit = 5;
+
     public Action<BattleData, int> onDrawCards;
     public Action<CardData> onSelectCard;
 

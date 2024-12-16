@@ -8,6 +8,8 @@ public class CardInfo : MonoBehaviour
 {
     public Image cardTypeImage;
 
+    public Image cardBackAnimation;
+
     [Header("CardValues")]
     public TextMeshProUGUI cardNameText;
     public TextMeshProUGUI atkText;

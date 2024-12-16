@@ -9,7 +9,6 @@ public class HandLoader : MonoBehaviour
 
     public List<HandCard> handCards = new List<HandCard>();
 
-    public List<Transform> targetCardPositions = new List<Transform>();
     public Transform OutOfScreenCardPosition;
 
     public float drawAnimationDelay = 0.2f;
@@ -32,7 +31,7 @@ public class HandLoader : MonoBehaviour
 
             // Set the initial position of the card.
             handCardObject.transform.position = i < cardsInHand
-                ? targetCardPositions[i].position
+                ? GameManager.Instance.selectorManager.GetCardPositionByIndex(i)
                 : OutOfScreenCardPosition.position;
 
             // Animate only if the card is outside of the hand initially.
@@ -50,7 +49,7 @@ public class HandLoader : MonoBehaviour
         float elapsedTime = 0f;
 
         Vector3 startPosition = OutOfScreenCardPosition.position;
-        Vector3 targetPosition = targetCardPositions[i].position;
+        Vector3 targetPosition = GameManager.Instance.selectorManager.GetCardPositionByIndex(i);
 
         while (elapsedTime < drawAnimationDuration)
         {

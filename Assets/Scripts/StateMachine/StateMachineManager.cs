@@ -38,6 +38,7 @@ public class StateMachineManager : MonoBehaviour
 
     public void TriggerMainPhaseInitialization()
     {
+        Debug.Log("On main phase initialize");
         OnMainPhaseInitialize?.Invoke();    
     }
 }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public PlayerState playerState;
     public StateMachineManager stateMachineManager;
     public BattleManager battleManager;
+    public SelectorManager selectorManager;
 
     private void Awake()
     {
