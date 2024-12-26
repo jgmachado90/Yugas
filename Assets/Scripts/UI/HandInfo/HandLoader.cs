@@ -17,9 +17,15 @@ public class HandLoader : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.battleManager.onDrawCards += InstantiateHandCards;
+        MatchEvents.onSelectCardForPlay += SelectCardForPlay;
     }
 
-    private void InstantiateHandCards(BattleData battleData, int cardCount)
+    public void SelectCardForPlay(int index)
+    {
+        handCards[index].TurnBack();
+    }
+
+    private void InstantiateHandCards(BattleData battleData, int cardCount, Turn currentTurn)
     {
         int cardsInHand = 5 - cardCount;
         for (int i = 0; i < 5; i++)

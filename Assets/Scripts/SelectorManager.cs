@@ -36,6 +36,11 @@ public class SelectorManager : MonoBehaviour
         return battleManager.GetCurrentHandCardByIndex(selectorIndex);
     }
 
+    public int GetSelectorIndex()
+    {
+        return selectorIndex;
+    }
+
     public Vector3 GetSelectedCardPosition()
     {
         return handCardPositions[selectorIndex].position;

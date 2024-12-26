@@ -23,7 +23,7 @@ public class BattleManager : MonoBehaviour
 
     public int handLimit = 5;
 
-    public Action<BattleData, int> onDrawCards;
+    public Action<BattleData, int, Turn> onDrawCards;
     public Action<CardData> onSelectCard;
 
     private void Awake()
@@ -66,7 +66,7 @@ public class BattleManager : MonoBehaviour
     private void DrawCards(BattleData battleData, Action complete)
     {
         int drawCount = battleData.DrawCards();
-        onDrawCards.Invoke(battleData, drawCount);
+        onDrawCards.Invoke(battleData, drawCount, currentTurn);
         complete?.Invoke();
     }
 
@@ -78,6 +78,7 @@ public class BattleManager : MonoBehaviour
         }
         return enemyBattleData.hand[index];
     }
+
 
     private void PrintCards(List<CardData> cards)
     {

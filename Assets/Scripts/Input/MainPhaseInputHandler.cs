@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 public class MainPhaseInputHandler : IInputHandler
 {
     private SelectorManager _selectorManager;
+
+    bool playingCard = false;
 
     public MainPhaseInputHandler(SelectorManager selectorManager)
     {
@@ -13,11 +16,13 @@ public class MainPhaseInputHandler : IInputHandler
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            _selectorManager.MoveSelector(1); // Move para a direita
+            if(!playingCard)
+                _selectorManager.MoveSelector(1); // Move para a direita
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            _selectorManager.MoveSelector(-1); // Move para a esquerda
+            if(!playingCard)
+                _selectorManager.MoveSelector(-1); // Move para a esquerda
         }
         if (Input.GetKeyDown(KeyCode.D)) // Ver detalhes da carta
         {
@@ -27,10 +32,19 @@ public class MainPhaseInputHandler : IInputHandler
         {
             SelectCardForPlay();
         }
+        if (Input.GetKeyDown(KeyCode.X)) // Selecionar carta para jogar
+        {
+            CancelPlayingCard();
+        }
         if (Input.GetKeyDown(KeyCode.UpArrow)) // Marcar para fusão
         {
             MarkForFusion();
         }
+    }
+
+    private void CancelPlayingCard()
+    {
+        throw new NotImplementedException();
     }
 
     private void ViewCardDetails()
@@ -41,8 +55,9 @@ public class MainPhaseInputHandler : IInputHandler
 
     private void SelectCardForPlay()
     {
-        var card = _selectorManager.GetSelectedCard();
-        MatchEvents.onSelectCardForPlay?.Invoke(card);
+        int index = _selectorManager.GetSelectorIndex();
+        MatchEvents.onSelectCardForPlay?.Invoke(index);
+        playingCard = true;
     }
 
     private void MarkForFusion()

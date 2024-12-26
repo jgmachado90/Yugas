@@ -8,7 +8,7 @@ public static class MatchEvents
     //StateEvents
 
     //InputEvents
-    public static Action<CardData> onSelectCardForPlay;
+    public static Action<int> onSelectCardForPlay;
     public static Action<CardData> onViewCardDetails;
     public static Action<CardData> onMarkForFusion;
 
