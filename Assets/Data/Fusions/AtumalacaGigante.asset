@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb80ac3c6ee6b24a9d66b6b200544ed, type: 3}
+  m_Name: AtumalacaGigante
+  m_EditorClassIdentifier: 
+  fusionCardData: {fileID: 11400000, guid: 029e8e5cdfcfe514abc8e557b8523904, type: 2}
+  fusionMonster:
+    monsterNames:
+    - Atumalaca
+    monsterSpecifications:
+    - 
+    monsterType: 
+    minAtk: 0
+  fusionMonster2:
+    monsterNames: []
+    monsterSpecifications:
+    - Giant
+    monsterType: 
+    minAtk: 0

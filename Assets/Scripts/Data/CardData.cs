@@ -78,4 +78,5 @@ public class CardData : ScriptableObject
     public int atk;
     public int def;
     public Sprite cardImage;
+    public List<string> specifications;
 }
