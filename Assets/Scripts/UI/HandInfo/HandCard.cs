@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -15,6 +16,33 @@ public class HandCard : MonoBehaviour
     public Image cardImage;
     public TextMeshProUGUI atkText;
     public TextMeshProUGUI defText;
+
+    public TextMeshProUGUI fusionNumber;
+    public Image fusionImage;
+    public float fusionOffset = 0.4f;
+
+    public void SelectForFusion(int number)
+    {
+        fusionImage.gameObject.SetActive(true);
+        fusionNumber.text = number.ToString();
+
+        float x = transform.position.x;
+        float y = transform.position.y;
+        float z = transform.position.z;
+
+        transform.position = new Vector3(x, y + fusionOffset, z);
+    }
+
+    public void CancelFusionSelection()
+    {
+        fusionImage.gameObject.SetActive(false);
+
+        float x = transform.position.x;
+        float y = transform.position.y;
+        float z = transform.position.z;
+
+        transform.position = new Vector3(x, y - fusionOffset, z);
+    }
 
     public void HandCardSetup(CardData cardData)
     {

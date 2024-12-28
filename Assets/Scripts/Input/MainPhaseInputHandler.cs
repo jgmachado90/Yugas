@@ -36,6 +36,10 @@ public class MainPhaseInputHandler : IInputHandler
         {
             MarkForFusion();
         }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) // Marcar para fusão
+        {
+            UnMarkForFusion();
+        }
     }
 
     private void ViewCardDetails()
@@ -61,5 +65,12 @@ public class MainPhaseInputHandler : IInputHandler
         int index = _selectorManager.GetSelectorIndex();
         var card = _selectorManager.GetSelectedCard();
         MatchEvents.onMarkForFusion?.Invoke(card, index);
+    }
+
+    private void UnMarkForFusion()
+    {
+        int index = _selectorManager.GetSelectorIndex();
+        var card = _selectorManager.GetSelectedCard();
+        MatchEvents.onUnMarkForFusion?.Invoke(card, index);
     }
 }

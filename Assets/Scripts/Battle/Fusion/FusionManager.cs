@@ -13,11 +13,13 @@ public class FusionManager : MonoBehaviour
     public List<int> fusionIndexs;
 
     public Action<int> onFusionRegistered;
+    public Action<int> onFusionUnregistered;
 
     private void Start()
     {
         MatchEvents.onFusionStart += TryFusion;
         MatchEvents.onMarkForFusion += MarkForFusion;
+        MatchEvents.onUnMarkForFusion += UnMarkForFusion;
         MatchEvents.onCancelFusion += CancelFusion;
     }
 
@@ -25,6 +27,7 @@ public class FusionManager : MonoBehaviour
     {
         MatchEvents.onFusionStart -= TryFusion;
         MatchEvents.onMarkForFusion -= MarkForFusion;
+        MatchEvents.onUnMarkForFusion -= UnMarkForFusion;
         MatchEvents.onCancelFusion -= CancelFusion;
     }
 
@@ -35,6 +38,15 @@ public class FusionManager : MonoBehaviour
         fusionIndexs.Add(index);
         onFusionRegistered.Invoke(index);
     }
+
+    private void UnMarkForFusion(CardData card, int index)
+    {
+        if (!fusionIndexs.Contains(index)) return;
+        fusionCards.Remove(card);
+        fusionIndexs.Remove(index);
+        onFusionUnregistered.Invoke(index);
+    }
+
 
     private void CancelFusion()
     {

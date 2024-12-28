@@ -13,8 +13,6 @@ public class HandLoader : MonoBehaviour
     public Transform OutOfScreenCardPosition;
 
 
-    public float fusionOffset = 0.4f;
-
     public float drawAnimationDelay = 0.2f;
     float drawAnimationDuration = 0.3f;
 
@@ -23,6 +21,7 @@ public class HandLoader : MonoBehaviour
         GameManager.Instance.battleManager.onDrawCards += InstantiateHandCards;
         MatchEvents.onSelectCardForPlay += SelectCardForPlay;
         GameManager.Instance.fusionManager.onFusionRegistered += SelectCardForFusion;
+        GameManager.Instance.fusionManager.onFusionUnregistered += UnSelectCardForFusion;
     }
 
     private void OnDestroy()
@@ -30,16 +29,34 @@ public class HandLoader : MonoBehaviour
         GameManager.Instance.battleManager.onDrawCards -= InstantiateHandCards;
         MatchEvents.onSelectCardForPlay -= SelectCardForPlay;
         GameManager.Instance.fusionManager.onFusionRegistered -= SelectCardForFusion;
+        GameManager.Instance.fusionManager.onFusionUnregistered -= UnSelectCardForFusion;
     }
 
     public void SelectCardForFusion(int index)
     {
         Debug.Log("select Card for fusion");
-        float x = handCards[index].transform.position.x;
-        float y = handCards[index].transform.position.y;
-        float z = handCards[index].transform.position.z;
+        int fusionNumber = GameManager.Instance.fusionManager.fusionIndexs.Count;
+        handCards[index].SelectForFusion(fusionNumber);
+    }
 
-        handCards[index].transform.position = new Vector3(x, y + fusionOffset, z);
+    public void UnSelectCardForFusion(int index)
+    {
+        Debug.Log("unselect Card for fusion");
+        int fusionNumber = GameManager.Instance.fusionManager.fusionIndexs.Count;
+        handCards[index].CancelFusionSelection();
+
+        ReorderFusionNumbers();
+    }
+
+    private void ReorderFusionNumbers()
+    {
+        List<int> fusions = GameManager.Instance.fusionManager.fusionIndexs;
+        for(int i = 0; i < fusions.Count; i++)
+        {
+            int numb = i + 1;
+            handCards[fusions[i]].fusionNumber.text = numb.ToString();
+        }
+        
     }
 
     public void SelectCardForPlay(int index)

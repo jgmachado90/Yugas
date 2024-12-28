@@ -14,6 +14,7 @@ public static class MatchEvents
 
     //Fusion
     public static Action<CardData, int> onMarkForFusion;
+    public static Action<CardData, int> onUnMarkForFusion;
     public static Action onCancelFusion;
     public static Action onFusionStart;
 
