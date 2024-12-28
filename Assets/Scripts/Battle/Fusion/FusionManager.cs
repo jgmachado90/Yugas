@@ -1,32 +1,58 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FusionManager : MonoBehaviour
 {
+    public FusionDataBase fusionData;
 
-    public List<CardData> cardsToFusion;
+    public CardData currentFusionResult;
+
+    public List<CardData> fusionCards;
+    public List<int> fusionIndexs;
+
+    public Action<int> onFusionRegistered;
 
     private void Start()
     {
-        CardData result = TryFusion(cardsToFusion);
-        Debug.Log(result.cardName);
+        MatchEvents.onFusionStart += TryFusion;
+        MatchEvents.onMarkForFusion += MarkForFusion;
+        MatchEvents.onCancelFusion += CancelFusion;
     }
 
-    public FusionDataBase fusionData;
-    public CardData TryFusion(List<CardData> FusionList)
+    private void OnDestroy()
     {
-        if (FusionList == null || FusionList.Count < 2)
-            return null;
+        MatchEvents.onFusionStart -= TryFusion;
+        MatchEvents.onMarkForFusion -= MarkForFusion;
+        MatchEvents.onCancelFusion -= CancelFusion;
+    }
 
-        CardData currentCard = FusionList[0]; // Começa com a primeira carta.
+    private void MarkForFusion(CardData card, int index)
+    {
+        if (fusionIndexs.Contains(index)) return;
+        fusionCards.Add(card);
+        fusionIndexs.Add(index);
+        onFusionRegistered.Invoke(index);
+    }
 
-        for (int i = 1; i < FusionList.Count; i++)
+    private void CancelFusion()
+    {
+        fusionCards.Clear();
+    }
+
+    public void TryFusion()
+    {
+        if (fusionCards == null || fusionCards.Count < 2)
+            currentFusionResult = null;
+
+        CardData currentCard = fusionCards[0];
+
+        for (int i = 1; i < fusionCards.Count; i++)
         {
-            CardData nextCard = FusionList[i];
+            CardData nextCard = fusionCards[i];
             FusionData bestFusion = null;
 
-            // Procura a melhor fusão possível para as duas cartas.
             foreach (var fusion in fusionData.FusionData)
             {
                 if ((IsFusionValid(currentCard, nextCard, fusion) ||
@@ -43,17 +69,15 @@ public class FusionManager : MonoBehaviour
             }
             else
             {
-                // Se uma fusão falha, retorna null.
-                return null;
+                currentFusionResult = fusionCards[fusionCards.Count-1];
             }
         }
 
-        return currentCard; // Retorna o resultado final da última fusão.
+        currentFusionResult = currentCard;
     }
 
     private bool IsFusionValid(CardData card1, CardData card2, FusionData fusion)
     {
-        // Verifica se os critérios de fusão são atendidos para as duas cartas.
         return DoesCardMatchFusionCriteria(card1, fusion.fusionMonster) &&
                DoesCardMatchFusionCriteria(card2, fusion.fusionMonster2) &&
                card1.atk >= fusion.fusionMonster.minAtk &&
@@ -63,7 +87,6 @@ public class FusionManager : MonoBehaviour
 
     private bool DoesCardMatchFusionCriteria(CardData card, FusionMonster fusionMonster)
     {
-        // Verifica se pelo menos um dos critérios é válido.
         if (fusionMonster.monsterNames.Contains(card.cardName) ||
             fusionMonster.monsterSpecifications.Exists(spec => card.specifications.Contains(spec)) ||
             fusionMonster.monsterType.Contains(card.monsterType))

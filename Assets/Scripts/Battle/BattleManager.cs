@@ -29,7 +29,6 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         stateMachineManager = GameManager.Instance.stateMachineManager;
-        Debug.Log("BattleManagerSubscribe");
         stateMachineManager.OnMatchInitialize += InitializeBattle;
         stateMachineManager.OnDrawPhaseInitialize += Draw;
     }

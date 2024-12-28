@@ -14,7 +14,7 @@ public class StateMachineManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Initialize StateMachine");
+       //Debug.Log("Initialize StateMachine");
         StateMachine = new StateMachine();
         StateMachine.ChangeState(new InitialPhase(this));
     }
@@ -26,7 +26,7 @@ public class StateMachineManager : MonoBehaviour
 
     public void TriggerMatchInitialization(Action onComplete)
     {
-        Debug.Log("OnMatchInitialize");
+        //Debug.Log("OnMatchInitialize");
         OnMatchInitialize?.Invoke(onComplete);
     }
 

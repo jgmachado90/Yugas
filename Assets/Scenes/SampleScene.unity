@@ -209,6 +209,7 @@ MonoBehaviour:
   handCardPrefab: {fileID: 6610223735672965138, guid: 1bcb2f2192c4f3c47936f644d231af77, type: 3}
   handCards: []
   OutOfScreenCardPosition: {fileID: 1995283397}
+  fusionOffset: 0.4
   drawAnimationDelay: 0.2
 --- !u!1 &91046775
 GameObject:
@@ -482,6 +483,7 @@ MonoBehaviour:
   stateMachineManager: {fileID: 1487837687}
   battleManager: {fileID: 1600855363}
   selectorManager: {fileID: 1635971048}
+  fusionManager: {fileID: 740382979}
 --- !u!4 &327358848
 Transform:
   m_ObjectHideFlags: 0
@@ -957,10 +959,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3693aa193f63442ab2ecf569328c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardsToFusion:
-  - {fileID: 11400000, guid: 421f219905c22a74ba0d05621cbaed36, type: 2}
-  - {fileID: 11400000, guid: c1f361f23e8efff49865bf0098491558, type: 2}
   fusionData: {fileID: 11400000, guid: d3fad9af9173a2f459ac3c360fc54b5d, type: 2}
+  currentFusionResult: {fileID: 0}
+  fusionCards: []
+  fusionIndexs: 
 --- !u!1 &781742039
 GameObject:
   m_ObjectHideFlags: 0

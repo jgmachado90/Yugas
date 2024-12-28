@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public static class MatchEvents
 {
@@ -10,7 +11,11 @@ public static class MatchEvents
     //InputEvents
     public static Action<int> onSelectCardForPlay;
     public static Action<CardData> onViewCardDetails;
-    public static Action<CardData> onMarkForFusion;
+
+    //Fusion
+    public static Action<CardData, int> onMarkForFusion;
+    public static Action onCancelFusion;
+    public static Action onFusionStart;
 
     //GeneralMatchEvents
 

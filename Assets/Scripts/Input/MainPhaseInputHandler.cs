@@ -32,19 +32,10 @@ public class MainPhaseInputHandler : IInputHandler
         {
             SelectCardForPlay();
         }
-        if (Input.GetKeyDown(KeyCode.X)) // Selecionar carta para jogar
-        {
-            CancelPlayingCard();
-        }
         if (Input.GetKeyDown(KeyCode.UpArrow)) // Marcar para fusão
         {
             MarkForFusion();
         }
-    }
-
-    private void CancelPlayingCard()
-    {
-        throw new NotImplementedException();
     }
 
     private void ViewCardDetails()
@@ -55,6 +46,11 @@ public class MainPhaseInputHandler : IInputHandler
 
     private void SelectCardForPlay()
     {
+        if(GameManager.Instance.fusionManager.fusionCards.Count > 0)
+        {
+            MatchEvents.onFusionStart.Invoke();
+        }
+
         int index = _selectorManager.GetSelectorIndex();
         MatchEvents.onSelectCardForPlay?.Invoke(index);
         playingCard = true;
@@ -62,7 +58,8 @@ public class MainPhaseInputHandler : IInputHandler
 
     private void MarkForFusion()
     {
+        int index = _selectorManager.GetSelectorIndex();
         var card = _selectorManager.GetSelectedCard();
-        MatchEvents.onMarkForFusion?.Invoke(card);
+        MatchEvents.onMarkForFusion?.Invoke(card, index);
     }
 }

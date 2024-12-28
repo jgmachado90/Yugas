@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HandLoader : MonoBehaviour
@@ -11,6 +12,9 @@ public class HandLoader : MonoBehaviour
 
     public Transform OutOfScreenCardPosition;
 
+
+    public float fusionOffset = 0.4f;
+
     public float drawAnimationDelay = 0.2f;
     float drawAnimationDuration = 0.3f;
 
@@ -18,6 +22,24 @@ public class HandLoader : MonoBehaviour
     {
         GameManager.Instance.battleManager.onDrawCards += InstantiateHandCards;
         MatchEvents.onSelectCardForPlay += SelectCardForPlay;
+        GameManager.Instance.fusionManager.onFusionRegistered += SelectCardForFusion;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.battleManager.onDrawCards -= InstantiateHandCards;
+        MatchEvents.onSelectCardForPlay -= SelectCardForPlay;
+        GameManager.Instance.fusionManager.onFusionRegistered -= SelectCardForFusion;
+    }
+
+    public void SelectCardForFusion(int index)
+    {
+        Debug.Log("select Card for fusion");
+        float x = handCards[index].transform.position.x;
+        float y = handCards[index].transform.position.y;
+        float z = handCards[index].transform.position.z;
+
+        handCards[index].transform.position = new Vector3(x, y + fusionOffset, z);
     }
 
     public void SelectCardForPlay(int index)

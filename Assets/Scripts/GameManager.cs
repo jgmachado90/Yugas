@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public StateMachineManager stateMachineManager;
     public BattleManager battleManager;
     public SelectorManager selectorManager;
+    public FusionManager fusionManager;
 
     private void Awake()
     {
