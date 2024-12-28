@@ -22,6 +22,7 @@ public class HandLoader : MonoBehaviour
         MatchEvents.onSelectCardForPlay += SelectCardForPlay;
         GameManager.Instance.fusionManager.onFusionRegistered += SelectCardForFusion;
         GameManager.Instance.fusionManager.onFusionUnregistered += UnSelectCardForFusion;
+        MatchEvents.onFusionStart += StartFusion;
     }
 
     private void OnDestroy()
@@ -30,6 +31,29 @@ public class HandLoader : MonoBehaviour
         MatchEvents.onSelectCardForPlay -= SelectCardForPlay;
         GameManager.Instance.fusionManager.onFusionRegistered -= SelectCardForFusion;
         GameManager.Instance.fusionManager.onFusionUnregistered -= UnSelectCardForFusion;
+        MatchEvents.onFusionStart -= StartFusion;
+    }
+
+    public void StartFusion()
+    {
+        StartCoroutine("FusionCoroutine");
+    }
+
+    public IEnumerator FusionCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        DiscardCards(GameManager.Instance.fusionManager.fusionIndexs);
+    }
+
+    public void DiscardCards(List<int> indexes)
+    {
+        List<HandCard> removedCards = new List<HandCard>();
+        foreach (var index in indexes)
+        {
+            removedCards.Add(handCards[index]);
+            handCards.Remove(handCards[index]);
+        
+        }
     }
 
     public void SelectCardForFusion(int index)
@@ -55,8 +79,7 @@ public class HandLoader : MonoBehaviour
         {
             int numb = i + 1;
             handCards[fusions[i]].fusionNumber.text = numb.ToString();
-        }
-        
+        }   
     }
 
     public void SelectCardForPlay(int index)

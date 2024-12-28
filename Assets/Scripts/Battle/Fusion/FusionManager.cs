@@ -14,6 +14,7 @@ public class FusionManager : MonoBehaviour
 
     public Action<int> onFusionRegistered;
     public Action<int> onFusionUnregistered;
+    public Action<CardData> onFusionCompleted;
 
     private void Start()
     {
@@ -82,10 +83,13 @@ public class FusionManager : MonoBehaviour
             else
             {
                 currentFusionResult = fusionCards[fusionCards.Count-1];
+                onFusionCompleted.Invoke(currentFusionResult);
+                return;
             }
         }
 
         currentFusionResult = currentCard;
+        onFusionCompleted.Invoke(currentFusionResult);
     }
 
     private bool IsFusionValid(CardData card1, CardData card2, FusionData fusion)

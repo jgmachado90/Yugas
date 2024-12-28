@@ -35,7 +35,8 @@ public enum CardType
     Monster,
     SpellCard,
     TrapCard,
-    Ritual
+    Ritual,
+    Fusion
 }
 
 public enum MonsterType

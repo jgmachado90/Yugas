@@ -20,11 +20,18 @@ public class CardInfoFactory : MonoBehaviour
         cardInfo.gameObject.SetActive(false);
         //LoadCard(cardData);
         MatchEvents.onViewCardDetails += ViewCardDetails;
+        GameManager.Instance.fusionManager.onFusionCompleted += ShowFusionResult;
     }
 
     private void OnDestroy()
     {
         MatchEvents.onViewCardDetails -= ViewCardDetails;
+        GameManager.Instance.fusionManager.onFusionCompleted -= ShowFusionResult;
+    }
+
+    public void ShowFusionResult(CardData fusionCard)
+    {
+        ViewCardDetails(fusionCard);
     }
 
     private CardInfo InstantiateCardInfo()
