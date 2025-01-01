@@ -3,18 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachineManager : MonoBehaviour
+public class StateMachineManager : MonoBehaviour, ISubsystem
 {
-    public StateMachine StateMachine { get; private set; }
+    public StateMachine StateMachine { get;private set; }
 
     public event Action<Action> OnMatchInitialize;
     public event Action<Action> OnDrawPhaseInitialize;
     public event Action OnMainPhaseInitialize;
     public event Action OnBattleInitialize;
 
-    private void Start()
+    public void Start()
     {
-       //Debug.Log("Initialize StateMachine");
         StateMachine = new StateMachine();
         StateMachine.ChangeState(new InitialPhase(this));
     }
@@ -32,13 +31,21 @@ public class StateMachineManager : MonoBehaviour
 
     public void TriggerDrawInitialization(Action onComplete)
     {
-        Debug.Log("OnDrawInitialize");
         OnDrawPhaseInitialize?.Invoke(onComplete);
     }
 
     public void TriggerMainPhaseInitialization()
     {
-        Debug.Log("On main phase initialize");
         OnMainPhaseInitialize?.Invoke();    
+    }
+
+    public void Initialize()
+    {
+
+    }
+
+    public void Shutdown()
+    {
+
     }
 }

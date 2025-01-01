@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FusionManager : MonoBehaviour
+public class FusionManager : MonoBehaviour, ISubsystem
 {
     public FusionDataBase fusionData;
 
@@ -111,5 +111,13 @@ public class FusionManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Initialize()
+    {
+    }
+
+    public void Shutdown()
+    {
     }
 }

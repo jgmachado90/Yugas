@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class CardInfoFactory : MonoBehaviour
 {
+    FusionManager fusionManager;
+
     public CardSpriteData cardSpriteData;
 
     public GameObject cardInfoPrefab;
@@ -16,17 +18,19 @@ public class CardInfoFactory : MonoBehaviour
 
     private void Start()
     {
+        fusionManager = SubsystemLocator.GetSubsystem<FusionManager>();
+
         cardInfo = InstantiateCardInfo();
         cardInfo.gameObject.SetActive(false);
         //LoadCard(cardData);
         MatchEvents.onViewCardDetails += ViewCardDetails;
-        GameManager.Instance.fusionManager.onFusionCompleted += ShowFusionResult;
+        fusionManager.onFusionCompleted += ShowFusionResult;
     }
 
     private void OnDestroy()
     {
         MatchEvents.onViewCardDetails -= ViewCardDetails;
-        GameManager.Instance.fusionManager.onFusionCompleted -= ShowFusionResult;
+        fusionManager.onFusionCompleted -= ShowFusionResult;
     }
 
     public void ShowFusionResult(CardData fusionCard)

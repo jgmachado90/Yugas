@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectorManager : MonoBehaviour
+public class SelectorManager : MonoBehaviour, ISubsystem
 {
     private int selectorIndex;
 
@@ -13,7 +13,7 @@ public class SelectorManager : MonoBehaviour
 
     private void Start()
     {
-        battleManager = GameManager.Instance.battleManager;
+        battleManager = SubsystemLocator.GetSubsystem<BattleManager>();
     }
 
     public void MoveSelector(int value)
@@ -49,5 +49,13 @@ public class SelectorManager : MonoBehaviour
     public Vector3 GetCardPositionByIndex(int index)
     {
         return handCardPositions[index].position;
+    }
+
+    public void Initialize()
+    {
+    }
+
+    public void Shutdown()
+    {
     }
 }

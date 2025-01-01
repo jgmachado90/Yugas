@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class HandLoader : MonoBehaviour
 {
+    private BattleManager battleManager;
+    private FusionManager fusionManager;
+    private SelectorManager selectorManager;
+
     public GameObject handCardPrefab;
 
     public List<HandCard> handCards = new List<HandCard>();
@@ -18,19 +22,23 @@ public class HandLoader : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.battleManager.onDrawCards += InstantiateHandCards;
+        battleManager = SubsystemLocator.GetSubsystem<BattleManager>();
+        fusionManager = SubsystemLocator.GetSubsystem<FusionManager>();
+        selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
+
+        battleManager.onDrawCards += InstantiateHandCards;
         MatchEvents.onSelectCardForPlay += SelectCardForPlay;
-        GameManager.Instance.fusionManager.onFusionRegistered += SelectCardForFusion;
-        GameManager.Instance.fusionManager.onFusionUnregistered += UnSelectCardForFusion;
+        fusionManager.onFusionRegistered += SelectCardForFusion;
+        fusionManager.onFusionUnregistered += UnSelectCardForFusion;
         MatchEvents.onFusionStart += StartFusion;
     }
 
     private void OnDestroy()
     {
-        GameManager.Instance.battleManager.onDrawCards -= InstantiateHandCards;
+        battleManager.onDrawCards -= InstantiateHandCards;
         MatchEvents.onSelectCardForPlay -= SelectCardForPlay;
-        GameManager.Instance.fusionManager.onFusionRegistered -= SelectCardForFusion;
-        GameManager.Instance.fusionManager.onFusionUnregistered -= UnSelectCardForFusion;
+        fusionManager.onFusionRegistered -= SelectCardForFusion;
+        fusionManager.onFusionUnregistered -= UnSelectCardForFusion;
         MatchEvents.onFusionStart -= StartFusion;
     }
 
@@ -42,7 +50,7 @@ public class HandLoader : MonoBehaviour
     public IEnumerator FusionCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
-        DiscardCards(GameManager.Instance.fusionManager.fusionIndexs);
+        DiscardCards(fusionManager.fusionIndexs);
     }
 
     public void DiscardCards(List<int> indexes)
@@ -59,14 +67,14 @@ public class HandLoader : MonoBehaviour
     public void SelectCardForFusion(int index)
     {
         Debug.Log("select Card for fusion");
-        int fusionNumber = GameManager.Instance.fusionManager.fusionIndexs.Count;
+        int fusionNumber = fusionManager.fusionIndexs.Count;
         handCards[index].SelectForFusion(fusionNumber);
     }
 
     public void UnSelectCardForFusion(int index)
     {
         Debug.Log("unselect Card for fusion");
-        int fusionNumber = GameManager.Instance.fusionManager.fusionIndexs.Count;
+        int fusionNumber = fusionManager.fusionIndexs.Count;
         handCards[index].CancelFusionSelection();
 
         ReorderFusionNumbers();
@@ -74,7 +82,7 @@ public class HandLoader : MonoBehaviour
 
     private void ReorderFusionNumbers()
     {
-        List<int> fusions = GameManager.Instance.fusionManager.fusionIndexs;
+        List<int> fusions = fusionManager.fusionIndexs;
         for(int i = 0; i < fusions.Count; i++)
         {
             int numb = i + 1;
@@ -99,7 +107,7 @@ public class HandLoader : MonoBehaviour
 
             // Set the initial position of the card.
             handCardObject.transform.position = i < cardsInHand
-                ? GameManager.Instance.selectorManager.GetCardPositionByIndex(i)
+                ? selectorManager.GetCardPositionByIndex(i)
                 : OutOfScreenCardPosition.position;
 
             // Animate only if the card is outside of the hand initially.
@@ -117,7 +125,7 @@ public class HandLoader : MonoBehaviour
         float elapsedTime = 0f;
 
         Vector3 startPosition = OutOfScreenCardPosition.position;
-        Vector3 targetPosition = GameManager.Instance.selectorManager.GetCardPositionByIndex(i);
+        Vector3 targetPosition = selectorManager.GetCardPositionByIndex(i);
 
         while (elapsedTime < drawAnimationDuration)
         {

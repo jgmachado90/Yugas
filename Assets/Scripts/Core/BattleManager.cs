@@ -10,9 +10,10 @@ public enum Turn
     AI
 }
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : MonoBehaviour, ISubsystem
 {
     private StateMachineManager stateMachineManager;
+    private PlayerState playerState;
 
     private BattleData playerBattleData;
     private BattleData enemyBattleData;
@@ -28,7 +29,9 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
-        stateMachineManager = GameManager.Instance.stateMachineManager;
+        stateMachineManager = SubsystemLocator.GetSubsystem<StateMachineManager>();
+        playerState = SubsystemLocator.GetSubsystem<PlayerState>();
+
         stateMachineManager.OnMatchInitialize += InitializeBattle;
         stateMachineManager.OnDrawPhaseInitialize += Draw;
     }
@@ -41,8 +44,7 @@ public class BattleManager : MonoBehaviour
 
     private void InitializeBattle(Action complete)
     {
-        Debug.Log("Initializing Battle");
-        DeckData playerDeck = GameManager.Instance.playerState.DeckData;
+        DeckData playerDeck = playerState.DeckData;
         playerBattleData = new BattleData(8000, playerDeck);
         enemyBattleData = new BattleData(8000, enemyDeck);
         complete?.Invoke();
@@ -50,7 +52,6 @@ public class BattleManager : MonoBehaviour
 
     private void Draw(Action complete)
     {
-        Debug.Log("DrawPhase");
         switch (currentTurn)
         {
             case Turn.Player:
@@ -86,5 +87,13 @@ public class BattleManager : MonoBehaviour
             Debug.Log(card.cardName);
         }
     
+    }
+
+    public void Initialize()
+    {
+    }
+
+    public void Shutdown()
+    {
     }
 }

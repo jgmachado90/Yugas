@@ -7,12 +7,15 @@ using UnityEngine;
 
 public class BattleHud : MonoBehaviour
 {
+    BattleManager battleManager;
+
     public TextMeshProUGUI playerCardCount;
     public TextMeshProUGUI AICardCount;
 
     private void Start()
     {
-        GameManager.Instance.battleManager.onDrawCards += UpdateCardCount;
+        battleManager = SubsystemLocator.GetSubsystem<BattleManager>();
+        battleManager.onDrawCards += UpdateCardCount;
     }
 
     private void UpdateCardCount(BattleData data, int cards, Turn currentTurn)
