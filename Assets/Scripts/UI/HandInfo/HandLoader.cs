@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class HandLoader : MonoBehaviour
 {
-    private BattleManager battleManager;
+    private MatchManager battleManager;
     private FusionManager fusionManager;
     private SelectorManager selectorManager;
 
@@ -22,7 +22,7 @@ public class HandLoader : MonoBehaviour
 
     private void Start()
     {
-        battleManager = SubsystemLocator.GetSubsystem<BattleManager>();
+        battleManager = SubsystemLocator.GetSubsystem<MatchManager>();
         fusionManager = SubsystemLocator.GetSubsystem<FusionManager>();
         selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
 
@@ -95,7 +95,7 @@ public class HandLoader : MonoBehaviour
         handCards[index].TurnBack();
     }
 
-    private void InstantiateHandCards(BattleData battleData, int cardCount, Turn currentTurn)
+    private void InstantiateHandCards(MatchBattlerStatus battleData, int cardCount, Turn currentTurn)
     {
         int cardsInHand = 5 - cardCount;
         for (int i = 0; i < 5; i++)

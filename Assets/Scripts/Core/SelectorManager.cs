@@ -6,14 +6,14 @@ public class SelectorManager : MonoBehaviour, ISubsystem
 {
     private int selectorIndex;
 
-    private BattleManager battleManager;
+    private MatchManager matchManager;
     public Action<int> onSelectorMoved;
 
     public List<Transform> handCardPositions;
 
     private void Start()
     {
-        battleManager = SubsystemLocator.GetSubsystem<BattleManager>();
+        matchManager = SubsystemLocator.GetSubsystem<MatchManager>();
     }
 
     public void MoveSelector(int value)
@@ -21,19 +21,19 @@ public class SelectorManager : MonoBehaviour, ISubsystem
         if (value < 0)
         {
             selectorIndex--;
-            selectorIndex = selectorIndex < 0 ? battleManager.handLimit - 1 : selectorIndex;
+            selectorIndex = selectorIndex < 0 ? matchManager.Match.MatchData.handLimit - 1 : selectorIndex;
         }
         else
         {
             selectorIndex++;
-            selectorIndex = selectorIndex > battleManager.handLimit - 1 ? 0 : selectorIndex;
+            selectorIndex = selectorIndex > matchManager.Match.MatchData.handLimit - 1 ? 0 : selectorIndex;
         }
         onSelectorMoved?.Invoke(selectorIndex);
     }
 
     public CardData GetSelectedCard()
     {
-        return battleManager.GetCurrentHandCardByIndex(selectorIndex);
+        return matchManager.GetCurrentHandCardByIndex(selectorIndex);
     }
 
     public int GetSelectorIndex()

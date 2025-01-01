@@ -209,7 +209,6 @@ MonoBehaviour:
   handCardPrefab: {fileID: 6610223735672965138, guid: 1bcb2f2192c4f3c47936f644d231af77, type: 3}
   handCards: []
   OutOfScreenCardPosition: {fileID: 1995283397}
-  fusionOffset: 0.4
   drawAnimationDelay: 0.2
 --- !u!1 &91046775
 GameObject:
@@ -479,11 +478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304e06eb37feb1e439ebf899cf19eedc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 2122253073}
-  stateMachineManager: {fileID: 1487837687}
-  battleManager: {fileID: 1600855363}
-  selectorManager: {fileID: 1635971048}
-  fusionManager: {fileID: 740382979}
 --- !u!4 &327358848
 Transform:
   m_ObjectHideFlags: 0
@@ -1550,7 +1544,7 @@ GameObject:
   - component: {fileID: 1600855362}
   - component: {fileID: 1600855363}
   m_Layer: 0
-  m_Name: BattleManager
+  m_Name: MatchManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1580,9 +1574,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1600855361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 492fb356cb279ef4baaea8bae56c1fdc, type: 3}
+  m_Script: {fileID: 11500000, guid: af32d7619730fb049a5878fbf6208f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchData: {fileID: 11400000, guid: 50eeba2ba9155b34184259696d59a216, type: 2}
   currentTurn: 0
   enemyDeck: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
   handLimit: 5

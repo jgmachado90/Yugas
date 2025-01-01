@@ -20,6 +20,6 @@ public static class MatchEvents
 
     //GeneralMatchEvents
 
-    public static Action<BattleData, int> onDrawCards;
+    public static Action<MatchBattlerStatus, int> onDrawCards;
     public static Action<CardData> onSelectCard;
 }
