@@ -794,6 +794,7 @@ GameObject:
   - component: {fileID: 6289311734313925638}
   - component: {fileID: 515626273720312755}
   - component: {fileID: 8709206565318395118}
+  - component: {fileID: 5419970822240224088}
   m_Layer: 5
   m_Name: HandCardPrefab
   m_TagString: Untagged
@@ -844,13 +845,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSpriteData: {fileID: 11400000, guid: 10e8a7d87b5f3ff489770530ff0cedf7, type: 2}
-  cardBack: {fileID: 8110617113399208550}
+  handCardAnimator: {fileID: 5419970822240224088}
   cardBackgroundImage: {fileID: 7756013584899675923}
   cardImage: {fileID: 8651893446331766787}
   atkText: {fileID: 4802571098141852309}
   defText: {fileID: 5357486942497469911}
-  fusionNumber: {fileID: 8837986218233871624}
   fusionImage: {fileID: 773711450189419224}
+  fusionNumber: {fileID: 8837986218233871624}
+--- !u!114 &5419970822240224088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610223735672965138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 805f987a5b887c14d8b7fad5088ffd48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardBack: {fileID: 8110617113399208550}
   fusionOffset: 0.4
 --- !u!1 &7327830156638591864
 GameObject:

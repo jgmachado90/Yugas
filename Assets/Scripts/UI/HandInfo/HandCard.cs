@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,39 +11,15 @@ public class HandCard : MonoBehaviour
 {
     public CardSpriteData cardSpriteData;
 
-    public GameObject cardBack;
+    [SerializeField] private HandCardAnimator handCardAnimator;
 
     public Image cardBackgroundImage;
     public Image cardImage;
     public TextMeshProUGUI atkText;
     public TextMeshProUGUI defText;
 
-    public TextMeshProUGUI fusionNumber;
     public Image fusionImage;
-    public float fusionOffset = 0.4f;
-
-    public void SelectForFusion(int number)
-    {
-        fusionImage.gameObject.SetActive(true);
-        fusionNumber.text = number.ToString();
-
-        float x = transform.position.x;
-        float y = transform.position.y;
-        float z = transform.position.z;
-
-        transform.position = new Vector3(x, y + fusionOffset, z);
-    }
-
-    public void CancelFusionSelection()
-    {
-        fusionImage.gameObject.SetActive(false);
-
-        float x = transform.position.x;
-        float y = transform.position.y;
-        float z = transform.position.z;
-
-        transform.position = new Vector3(x, y - fusionOffset, z);
-    }
+    public TextMeshProUGUI fusionNumber;
 
     public void HandCardSetup(CardData cardData)
     {
@@ -52,49 +29,21 @@ public class HandCard : MonoBehaviour
         defText.text = cardData.def.ToString();
     }
 
-    public void TurnBack()
+    public void SelectForPlay()
     {
-        StartCoroutine("TurnBackCoroutine");
+        handCardAnimator.TurnBack();
     }
 
-    public IEnumerator TurnBackCoroutine()
+    public void SelectForFusion(int _fusionNumber)
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        float duration = 0.3f;
-        int startX = 1;
-        int endX = 0;
-        float elapsedTime = 0f;
+        fusionImage.gameObject.SetActive(true);
+        fusionNumber.text = _fusionNumber.ToString();
+        handCardAnimator.SelectForFusion();
+    }
 
-        // Get the current scale
-        Vector3 currentScale = rectTransform.localScale;
-
-        while (elapsedTime < duration)
-        {
-            // Lerp the scale
-            float newX = Mathf.Lerp(startX, endX, elapsedTime / duration);
-            rectTransform.localScale = new Vector3(newX, currentScale.y, currentScale.z);
-
-            elapsedTime += Time.deltaTime;
-            yield return null; // Wait until the next frame
-        }
-
-        rectTransform.localScale = new Vector3(endX, currentScale.y, currentScale.z);
-        cardBack.SetActive(true);
-
-        startX = 0;
-        endX = 1;
-        elapsedTime = 0f;
-        currentScale = rectTransform.localScale;
-
-        while (elapsedTime < duration)
-        {
-            // Lerp the scale
-            float newX = Mathf.Lerp(startX, endX, elapsedTime / duration);
-            rectTransform.localScale = new Vector3(newX, currentScale.y, currentScale.z);
-
-            elapsedTime += Time.deltaTime;
-            yield return null; // Wait until the next frame
-        }
-
+    public void CancelFusionSelection()
+    {
+        fusionImage.gameObject.SetActive(false);
+        handCardAnimator.CancelFusionSelection();
     }
 }

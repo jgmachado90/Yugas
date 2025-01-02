@@ -11,6 +11,7 @@ public class MatchManager : MonoBehaviour, ISubsystem
     private PlayerState playerState;
 
     [SerializeField] private MatchData matchData;
+    public MatchData MatchData {  get { return matchData; } }
     public DeckData enemyDeck;
     private Match match;
     public Match Match {  get { return match; } }

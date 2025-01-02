@@ -21,12 +21,12 @@ public class SelectorManager : MonoBehaviour, ISubsystem
         if (value < 0)
         {
             selectorIndex--;
-            selectorIndex = selectorIndex < 0 ? matchManager.Match.MatchData.handLimit - 1 : selectorIndex;
+            selectorIndex = selectorIndex < 0 ? matchManager.MatchData.handLimit - 1 : selectorIndex;
         }
         else
         {
             selectorIndex++;
-            selectorIndex = selectorIndex > matchManager.Match.MatchData.handLimit - 1 ? 0 : selectorIndex;
+            selectorIndex = selectorIndex > matchManager.MatchData.handLimit - 1 ? 0 : selectorIndex;
         }
         onSelectorMoved?.Invoke(selectorIndex);
     }

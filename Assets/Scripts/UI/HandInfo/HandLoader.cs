@@ -6,27 +6,23 @@ using UnityEngine;
 
 public class HandLoader : MonoBehaviour
 {
-    private MatchManager battleManager;
+    private MatchManager matchManager;
     private FusionManager fusionManager;
     private SelectorManager selectorManager;
+
+    public DrawCardAnimator drawCardAnimator;
 
     public GameObject handCardPrefab;
 
     public List<HandCard> handCards = new List<HandCard>();
 
-    public Transform OutOfScreenCardPosition;
-
-
-    public float drawAnimationDelay = 0.2f;
-    float drawAnimationDuration = 0.3f;
-
     private void Start()
     {
-        battleManager = SubsystemLocator.GetSubsystem<MatchManager>();
+        matchManager = SubsystemLocator.GetSubsystem<MatchManager>();
         fusionManager = SubsystemLocator.GetSubsystem<FusionManager>();
         selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
 
-        battleManager.onDrawCards += InstantiateHandCards;
+        matchManager.onDrawCards += DrawCards;
         MatchEvents.onSelectCardForPlay += SelectCardForPlay;
         fusionManager.onFusionRegistered += SelectCardForFusion;
         fusionManager.onFusionUnregistered += UnSelectCardForFusion;
@@ -35,7 +31,7 @@ public class HandLoader : MonoBehaviour
 
     private void OnDestroy()
     {
-        battleManager.onDrawCards -= InstantiateHandCards;
+        matchManager.onDrawCards -= DrawCards;
         MatchEvents.onSelectCardForPlay -= SelectCardForPlay;
         fusionManager.onFusionRegistered -= SelectCardForFusion;
         fusionManager.onFusionUnregistered -= UnSelectCardForFusion;
@@ -66,14 +62,12 @@ public class HandLoader : MonoBehaviour
 
     public void SelectCardForFusion(int index)
     {
-        Debug.Log("select Card for fusion");
         int fusionNumber = fusionManager.fusionIndexs.Count;
         handCards[index].SelectForFusion(fusionNumber);
     }
 
     public void UnSelectCardForFusion(int index)
     {
-        Debug.Log("unselect Card for fusion");
         int fusionNumber = fusionManager.fusionIndexs.Count;
         handCards[index].CancelFusionSelection();
 
@@ -92,56 +86,29 @@ public class HandLoader : MonoBehaviour
 
     public void SelectCardForPlay(int index)
     {
-        handCards[index].TurnBack();
+        handCards[index].SelectForPlay();
     }
 
-    private void InstantiateHandCards(MatchBattlerStatus battleData, int cardCount, Turn currentTurn)
+    private void DrawCards(MatchBattlerStatus battleData, int cardCount, Turn currentTurn)
     {
-        int cardsInHand = 5 - cardCount;
-        for (int i = 0; i < 5; i++)
+        int handLimit = matchManager.MatchData.handLimit;
+        int cardsInHand = handLimit - cardCount;
+
+        for (int i = 0; i < handLimit; i++)
         {
             GameObject handCardObject = Instantiate(handCardPrefab, transform);
-            HandCard handCard = handCardObject.GetComponent<HandCard>();
-            handCard.HandCardSetup(battleData.hand[i]);
-            handCards.Add(handCard);
+            CardSetup(battleData, cardsInHand, i, handCardObject);
 
-            // Set the initial position of the card.
-            handCardObject.transform.position = i < cardsInHand
-                ? selectorManager.GetCardPositionByIndex(i)
-                : OutOfScreenCardPosition.position;
-
-            // Animate only if the card is outside of the hand initially.
             if (i >= cardsInHand)
-            {
-                StartCoroutine(CardDrawAnimationCoroutine(handCardObject, i));
-            }
+                drawCardAnimator.DrawCardAnimation(handCardObject, i);
         }
     }
-    public IEnumerator CardDrawAnimationCoroutine(GameObject handCardObject, int i)
+
+    private void CardSetup(MatchBattlerStatus battleData, int cardsInHand, int i, GameObject handCardObject)
     {
-        yield return new WaitForSeconds(drawAnimationDelay * i); // Wait before starting the animation
-
-         // Total duration of the animation in seconds.
-        float elapsedTime = 0f;
-
-        Vector3 startPosition = OutOfScreenCardPosition.position;
-        Vector3 targetPosition = selectorManager.GetCardPositionByIndex(i);
-
-        while (elapsedTime < drawAnimationDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / drawAnimationDuration); // Normalize time to [0, 1]
-
-            // Apply easing function for smoother animation (ease out).
-            t = t * t * (3f - 2f * t);
-
-            handCardObject.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-
-            yield return null;
-        }
-
-        // Ensure the card is exactly at the target position at the end.
-        handCardObject.transform.position = targetPosition;
+        HandCard handCard = handCardObject.GetComponent<HandCard>();
+        handCard.HandCardSetup(battleData.hand[i]);
+        handCards.Add(handCard);
+        handCardObject.transform.position = selectorManager.GetCardPositionByIndex(i);
     }
-
 }
