@@ -37,7 +37,7 @@ public class FusionManager : MonoBehaviour, ISubsystem
         if (fusionIndexs.Contains(index)) return;
         fusionCards.Add(card);
         fusionIndexs.Add(index);
-        onFusionRegistered.Invoke(index);
+        onFusionRegistered?.Invoke(index);
     }
 
     private void UnMarkForFusion(CardData card, int index)

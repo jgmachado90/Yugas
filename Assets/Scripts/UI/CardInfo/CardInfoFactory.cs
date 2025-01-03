@@ -35,7 +35,7 @@ public class CardInfoFactory : MonoBehaviour
 
     public void ShowFusionResult(CardData fusionCard)
     {
-        ViewCardDetails(fusionCard);
+        //ViewCardDetails(fusionCard);
     }
 
     private CardInfo InstantiateCardInfo()

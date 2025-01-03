@@ -11,6 +11,7 @@ public class MainPhaseInputHandler : IInputHandler
     public MainPhaseInputHandler(SelectorManager selectorManager)
     {
         this.selectorManager = selectorManager;
+        fusionManager = SubsystemLocator.GetSubsystem<FusionManager>(); 
     }
 
     public void HandleInput()
@@ -54,6 +55,7 @@ public class MainPhaseInputHandler : IInputHandler
         if(fusionManager.fusionCards.Count > 0)
         {
             MatchEvents.onFusionStart.Invoke();
+            return;
         }
 
         int index = selectorManager.GetSelectorIndex();
