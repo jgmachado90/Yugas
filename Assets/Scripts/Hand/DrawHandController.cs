@@ -36,7 +36,9 @@ public class DrawHandController
 
         for (int i = 0; i < handLimit; i++)
         {
-            GameObject handCardObject = cardFactory.CreateCard();
+            ICard createdCard = cardFactory.CreateCard(CardFactoryType.HandCard);
+            MonoBehaviour cardMonobehaviour = createdCard as MonoBehaviour;
+            GameObject handCardObject = cardMonobehaviour.gameObject;
             handCardObject.transform.SetParent(handController.transform);
             handCardObject.GetComponent<RectTransform>().localScale = Vector3.one;  
             CardSetup(battleData, cardsInHand, i, handCardObject);

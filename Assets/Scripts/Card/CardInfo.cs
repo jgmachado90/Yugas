@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardInfo : MonoBehaviour
+public class CardInfo : MonoBehaviour, ICard
 {
     public Image cardTypeImage;
 
@@ -37,6 +37,11 @@ public class CardInfo : MonoBehaviour
     public RectTransform Cardp1;
     public RectTransform Infop0;
     public RectTransform Infop1;
+
+    public void CardSetup(CardData cardData)
+    {
+       
+    }
 
     public void SetLevel(int level)
     {

@@ -11,10 +11,10 @@ public class HandController : MonoBehaviour
 
     [SerializeField] private DropHandCardsAnimator dropHandCardsAnimator;
 
-    [SerializeField] private Transform playCardsTransform;
-
     public DrawCardAnimator drawCardAnimator;
     public List<HandCard> handCards = new List<HandCard>();
+
+    public Action<List<HandCard>> onHandFusion;
 
     private void Start()
     {
@@ -41,16 +41,16 @@ public class HandController : MonoBehaviour
         handCards[index].SelectForPlay();
         List<int> cardsForPlay = new List<int>();
         cardsForPlay.Add(index);
-        PlayCards(cardsForPlay);
     }
 
-    public void PlayCards(List<int> indexes)
+    public void PlayFusion(List<int> indexes)
     {
+        List<HandCard> fusionHandCards = new List<HandCard>();
         foreach (int index in indexes)
         {
-            handCards[index].transform.SetParent(playCardsTransform);
+            fusionHandCards.Add(handCards[index]);
         }
-        dropHandCardsAnimator.DropHandCards();
+       // dropHandCardsAnimator.DropHandCards(fusionHandCards);
     }
 
 }

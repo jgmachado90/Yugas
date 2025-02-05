@@ -19,7 +19,7 @@ public class FusionHandController
 
     private void SelectFusionCardsForPlay(CardData data)
     {
-        handController.PlayCards(fusionManager.fusionIndexs);
+        handController.PlayFusion(fusionManager.fusionIndexs);
     }
 
     public void OnDestroy()

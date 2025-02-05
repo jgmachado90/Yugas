@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HandCard : MonoBehaviour
+public class HandCard : MonoBehaviour, IHandCard
 {
     public CardSpriteData cardSpriteData;
 
@@ -26,6 +26,13 @@ public class HandCard : MonoBehaviour
         cardBackgroundImage.sprite = cardSpriteData.GetSpriteForHandCardType(cardData.cardType);
         cardImage.sprite = cardData.cardImage;
         atkText.text = cardData.atk.ToString(); 
+        defText.text = cardData.def.ToString();
+    }
+    public void CardSetup(CardData cardData)
+    {
+        cardBackgroundImage.sprite = cardSpriteData.GetSpriteForHandCardType(cardData.cardType);
+        cardImage.sprite = cardData.cardImage;
+        atkText.text = cardData.atk.ToString();
         defText.text = cardData.def.ToString();
     }
 
