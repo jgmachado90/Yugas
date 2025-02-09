@@ -1,34 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class MatchBattlerStatus
+public class BattlerStatus : IBattlerStatus
 {
     public int lifePoints;
-
     public int cardCount;
     public int handLimit;
 
     public Deck deck;
+
     public List<CardData> field = new List<CardData>();
     public List<CardData> hand = new List<CardData>();
 
-    public MatchBattlerStatus(int _lifePoints, int _handLimit, DeckData _deck)
+    public BattlerStatus(MatchData matchData , DeckData _deck)
     {
-        lifePoints = _lifePoints;
+        lifePoints = matchData.lifePoints;
         deck = new Deck(_deck.cards);
-        cardCount = deck.cards.Count;
-        handLimit = _handLimit; 
+        cardCount = _deck.cards.Count;
+        handLimit = matchData.handLimit;
     }
 
     public int DrawCards()
     {
         int count = 0;
-        while(hand.Count < handLimit)
+        while (hand.Count < handLimit)
         {
             hand.Add(deck.Pop());
             count++;
         }
         return count;
+    }
+
+    public CardData GetHandCardByIndex(int index)
+    {
+        return hand[index];
     }
 }

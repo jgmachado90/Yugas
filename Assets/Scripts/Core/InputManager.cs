@@ -1,19 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour, ISubsystem
+public class InputManager : MonoBehaviour, ISubsystem
 {
+    private IInputHandlerFactory inputHandlerFactory;
+
     private IInputHandler currentInputHandler;
 
-    private StateMachineManager stateMachineManager;
-    private SelectorManager selectorManager;
+    private IStateMachineManager stateMachineManager;
 
     private void Start()
     {
         stateMachineManager = SubsystemLocator.GetSubsystem<StateMachineManager>();
-        selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
+        inputHandlerFactory = SubsystemLocator.GetSubsystem<InputHandlerFactory>();
 
         stateMachineManager.OnMainPhaseInitialize += SetMainPhaseInputHandler;
         stateMachineManager.OnBattleInitialize += SetBattleInputHandler;
@@ -27,12 +25,12 @@ public class InputController : MonoBehaviour, ISubsystem
 
     private void SetMainPhaseInputHandler()
     {
-        SetInputHandler(new MainPhaseInputHandler(selectorManager));
+        SetInputHandler(inputHandlerFactory.CreateMainPhaseHandler());
     }
 
     private void SetBattleInputHandler()
     {
-        SetInputHandler(new BattlePhaseInputHandler());
+        SetInputHandler(inputHandlerFactory.CreateBattlePhaseHandler());
     }
 
 

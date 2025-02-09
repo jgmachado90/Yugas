@@ -9,6 +9,7 @@ public class DrawHandController
     private MatchManager matchManager;
     private SelectorManager selectorManager;
     private CardFactory cardFactory;
+    private IGameState gameState;
 
     DrawCardAnimator drawCardAnimator;
 
@@ -20,6 +21,7 @@ public class DrawHandController
         selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
         matchManager = SubsystemLocator.GetSubsystem<MatchManager>();
         cardFactory = SubsystemLocator.GetSubsystem<CardFactory>();
+        gameState = SubsystemLocator.GetSubsystem<GameState>(); 
 
         matchManager.onDrawCards += DrawCards;
     }
@@ -29,9 +31,9 @@ public class DrawHandController
     {
         matchManager.onDrawCards -= DrawCards;
     }
-    private void DrawCards(MatchBattlerStatus battleData, int cardCount, Turn currentTurn)
+    private void DrawCards(IBattlerStatus battlerData, int cardCount, Turn currentTurn)
     {
-        int handLimit = matchManager.MatchData.handLimit;
+        int handLimit = gameState.GetMatchData().handLimit;
         int cardsInHand = handLimit - cardCount;
 
         for (int i = 0; i < handLimit; i++)
@@ -41,16 +43,16 @@ public class DrawHandController
             GameObject handCardObject = cardMonobehaviour.gameObject;
             handCardObject.transform.SetParent(handController.transform);
             handCardObject.GetComponent<RectTransform>().localScale = Vector3.one;  
-            CardSetup(battleData, cardsInHand, i, handCardObject);
+            CardSetup(battlerData, cardsInHand, i, handCardObject);
 
             if (i >= cardsInHand)
                 drawCardAnimator.DrawCardAnimation(handCardObject, i);
         }
     }
-    private void CardSetup(MatchBattlerStatus battleData, int cardsInHand, int i, GameObject handCardObject)
+    private void CardSetup(IBattlerStatus battleData, int cardsInHand, int i, GameObject handCardObject)
     {
         HandCard handCard = handCardObject.GetComponent<HandCard>();
-        handCard.HandCardSetup(battleData.hand[i]);
+        handCard.HandCardSetup(battleData.GetHandCardByIndex(i));
         handController.handCards.Add(handCard);
         handCardObject.transform.position = selectorManager.GetCardPositionByIndex(i);
     }

@@ -18,7 +18,7 @@ public class BattleHud : MonoBehaviour
         battleManager.onDrawCards += UpdateCardCount;
     }
 
-    private void UpdateCardCount(MatchBattlerStatus data, int cards, Turn currentTurn)
+    private void UpdateCardCount(IBattlerStatus data, int cards, Turn currentTurn)
     {
         switch (currentTurn)
         {

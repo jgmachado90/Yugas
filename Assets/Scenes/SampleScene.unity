@@ -981,7 +981,7 @@ GameObject:
   - component: {fileID: 1553569626}
   - component: {fileID: 1553569627}
   m_Layer: 0
-  m_Name: InputController
+  m_Name: InputManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1058,8 +1058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af32d7619730fb049a5878fbf6208f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchData: {fileID: 11400000, guid: 50eeba2ba9155b34184259696d59a216, type: 2}
-  enemyDeck: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
 --- !u!1 &1635971046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,8 +1198,9 @@ GameObject:
   - component: {fileID: 1816634824}
   - component: {fileID: 1816634823}
   - component: {fileID: 1816634825}
+  - component: {fileID: 1816634826}
   m_Layer: 0
-  m_Name: CardFactory
+  m_Name: Factories
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1276,6 +1275,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoCardPrefab: {fileID: 1498566339894153412, guid: 70651f09c47b38e47a578d1fc4c45a22, type: 3}
+--- !u!114 &1816634826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816634820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2786b22f35e444ea39a93e9591934d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1995283396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeckData: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
+  enemyDeck: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
+  matchData: {fileID: 11400000, guid: 50eeba2ba9155b34184259696d59a216, type: 2}
 --- !u!1001 &6264182138214683685
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,14 +3,14 @@ using System.Collections;
 using UnityEngine;
 public class MainPhaseInputHandler : IInputHandler
 {
-    private SelectorManager selectorManager;
+    private ISelectorManager selectorManager;
     private FusionManager fusionManager;
 
     bool playingCard = false;
 
-    public MainPhaseInputHandler(SelectorManager selectorManager)
+    public MainPhaseInputHandler()
     {
-        this.selectorManager = selectorManager;
+        selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
         fusionManager = SubsystemLocator.GetSubsystem<FusionManager>(); 
     }
 

@@ -10,7 +10,7 @@ public enum Turn
 }
 
 
-public class TurnManager
+public class TurnManager : ITurnManager
 {
     public Turn currentTurn = Turn.Player;
 

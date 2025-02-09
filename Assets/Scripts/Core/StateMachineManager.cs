@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachineManager : MonoBehaviour, ISubsystem
+public class StateMachineManager : MonoBehaviour, ISubsystem, IStateMachineManager
 {
-    public StateMachine StateMachine { get;private set; }
+    public IStateMachine StateMachine { get;private set; }
 
     public event Action<Action> OnMatchInitialize;
     public event Action<Action> OnDrawPhaseInitialize;
+
     public event Action OnMainPhaseInitialize;
     public event Action OnBattleInitialize;
 
@@ -25,7 +26,6 @@ public class StateMachineManager : MonoBehaviour, ISubsystem
 
     public void TriggerMatchInitialization(Action onComplete)
     {
-        //Debug.Log("OnMatchInitialize");
         OnMatchInitialize?.Invoke(onComplete);
     }
 

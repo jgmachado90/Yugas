@@ -15,32 +15,23 @@ public class CardFactory : MonoBehaviour, ISubsystem
     public DetailedCardFactory detailedCardFactory;
     public InfoCardFactory infoCardFactory;
 
-    private List<ICard> createdCards = new List<ICard>();
-
-
-    public ICard CreateCard(CardFactoryType Type)
-    {
-        ICard createdCard = null;
-        if (Type == CardFactoryType.HandCard)
-        {
-            createdCard = handCardFactory.CreateCard();
-        }
-        else if(Type == CardFactoryType.DetailedCard)
-        {
-            createdCard = detailedCardFactory.CreateCard();
-        }
-        else if(Type == CardFactoryType.InfoCard)
-        {
-            createdCard = infoCardFactory.CreateCard();
-        }
-        createdCards.Add(createdCard);
-        return createdCard;
-    }
-    
+    private Dictionary<CardFactoryType, ICardFactory> factoryMap;
 
     public void Initialize()
     {
-      
+        factoryMap = new Dictionary<CardFactoryType, ICardFactory>
+        {
+            { CardFactoryType.HandCard, handCardFactory },
+            { CardFactoryType.DetailedCard, detailedCardFactory },
+            { CardFactoryType.InfoCard, infoCardFactory }
+        };
+    }
+
+    public ICard CreateCard(CardFactoryType type)
+    {
+        if (factoryMap.ContainsKey(type))
+            return factoryMap[type].CreateCard();
+        return null;
     }
 
     public void Shutdown()

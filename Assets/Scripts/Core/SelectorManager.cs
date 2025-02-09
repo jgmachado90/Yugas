@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectorManager : MonoBehaviour, ISubsystem
+public class SelectorManager : MonoBehaviour, ISubsystem, ISelectorManager
 {
     private int selectorIndex;
 
+    private IGameState gameState;
     private MatchManager matchManager;
+
     public Action<int> onSelectorMoved;
 
     public List<Transform> handCardPositions;
 
     private void Start()
     {
+        gameState = SubsystemLocator.GetSubsystem<GameState>();
         matchManager = SubsystemLocator.GetSubsystem<MatchManager>();
     }
 
@@ -21,12 +24,12 @@ public class SelectorManager : MonoBehaviour, ISubsystem
         if (value < 0)
         {
             selectorIndex--;
-            selectorIndex = selectorIndex < 0 ? matchManager.MatchData.handLimit - 1 : selectorIndex;
+            selectorIndex = selectorIndex < 0 ? gameState.GetMatchData().handLimit - 1 : selectorIndex;
         }
         else
         {
             selectorIndex++;
-            selectorIndex = selectorIndex > matchManager.MatchData.handLimit - 1 ? 0 : selectorIndex;
+            selectorIndex = selectorIndex > gameState.GetMatchData().handLimit - 1 ? 0 : selectorIndex;
         }
         onSelectorMoved?.Invoke(selectorIndex);
     }

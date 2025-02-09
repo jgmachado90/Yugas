@@ -1,4 +1,4 @@
-public class StateMachine
+public class StateMachine : IStateMachine
 {
     private IState currentState;
 
