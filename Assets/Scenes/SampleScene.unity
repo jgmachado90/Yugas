@@ -431,6 +431,7 @@ Transform:
   - {fileID: 1635971047}
   - {fileID: 740382978}
   - {fileID: 1816634821}
+  - {fileID: 2000797135}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1323,6 +1324,52 @@ RectTransform:
   m_AnchoredPosition: {x: 1180, y: -350}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2000797134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000797135}
+  - component: {fileID: 2000797136}
+  m_Layer: 0
+  m_Name: GameState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2000797135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000797134}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 327358848}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000797136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000797134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db094fb304d20b140be6c362bae9029b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLifePoints: 8000
+  enemyLifePoints: 8000
 --- !u!1 &2056690207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,7 +1417,7 @@ GameObject:
   - component: {fileID: 2122253072}
   - component: {fileID: 2122253073}
   m_Layer: 0
-  m_Name: PlayerState
+  m_Name: GameData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1400,10 +1447,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2122253071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b908b76097780c04ea48a97993cbe723, type: 3}
+  m_Script: {fileID: 11500000, guid: 7745577ec3cab7c45bdcfe5211c5e9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeckData: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
+  deckData: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
   enemyDeck: {fileID: 11400000, guid: 32dc487d0be563344abee237249f55bb, type: 2}
   matchData: {fileID: 11400000, guid: 50eeba2ba9155b34184259696d59a216, type: 2}
 --- !u!1001 &6264182138214683685

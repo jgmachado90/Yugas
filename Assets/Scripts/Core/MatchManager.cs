@@ -4,19 +4,18 @@ using UnityEngine;
 public class MatchManager : MonoBehaviour, ISubsystem
 {
     private IStateMachineManager stateMachineManager;
+    private IGameData gameData;
     private IGameState gameState;
-
-    private IBattlerStatus playerBattlerStatus;
-    private IBattlerStatus enemyBattlerStatus;
 
     private ITurnManager turnManager;
 
-    public Action<IBattlerStatus, int, Turn> onDrawCards;
+    public Action<IHandState,int, Turn> onDrawCards;
     public Action<CardData> onSelectCard;
 
     private void Awake()
     {
         stateMachineManager = SubsystemLocator.GetSubsystem<StateMachineManager>();
+        gameData = SubsystemLocator.GetSubsystem<GameData>();
         gameState = SubsystemLocator.GetSubsystem<GameState>();
 
         stateMachineManager.OnMatchInitialize += InitializeMatch;
@@ -31,9 +30,6 @@ public class MatchManager : MonoBehaviour, ISubsystem
 
     private void InitializeMatch(Action complete)
     {
-        playerBattlerStatus = new BattlerStatus(gameState.GetMatchData(), gameState.GetDeckData());
-        enemyBattlerStatus = new BattlerStatus(gameState.GetMatchData(), gameState.GetEnemyDeckData());
-
         turnManager = new TurnManager();
         complete?.Invoke();
     }
@@ -43,18 +39,18 @@ public class MatchManager : MonoBehaviour, ISubsystem
         switch (turnManager.GetCurrentTurn())
         {
             case Turn.Player:
-            DrawCards(playerBattlerStatus, complete);
+            DrawCards(gameState.GetHandState(true), complete);
             break;
             case Turn.AI:
-            DrawCards(enemyBattlerStatus, complete);
+            DrawCards(gameState.GetHandState(false), complete);
             break;
         }
     }
 
-    private void DrawCards(IBattlerStatus battleData, Action complete)
+    private void DrawCards(IHandState handState, Action complete)
     {
-        int drawCount = battleData.DrawCards();
-        onDrawCards.Invoke(battleData, drawCount, turnManager.GetCurrentTurn());
+        int drawCount = handState.DrawCards();
+        onDrawCards.Invoke(handState, drawCount, turnManager.GetCurrentTurn());
         complete?.Invoke();
     }
 
@@ -62,9 +58,9 @@ public class MatchManager : MonoBehaviour, ISubsystem
     {
         if(turnManager.GetCurrentTurn() == Turn.Player)
         {
-            return playerBattlerStatus.GetHandCardByIndex(index);
+            return gameState.GetHandState(true).GetHandCardByIndex(index);
         }
-        return enemyBattlerStatus.GetHandCardByIndex(index);
+        return gameState.GetHandState(false).GetHandCardByIndex(index);
     }
 
     public void Initialize()

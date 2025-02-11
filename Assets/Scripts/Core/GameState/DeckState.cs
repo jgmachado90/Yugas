@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck
+public class DeckState : IDeckState
 {
-    
     public List<CardData> cards = new List<CardData>();
 
-    public Deck(List<CardData> _cards)
+    public DeckState(List<CardData> _cards)
     {
         cards = new List<CardData>(_cards);
     }
@@ -41,7 +40,9 @@ public class Deck
         return cards[cards.Count - 1];
     }
 
-    public int Count => cards.Count;
+    public int GetCardCount() {
+        return cards.Count;
+    } 
 
     public void Shuffle()
     {

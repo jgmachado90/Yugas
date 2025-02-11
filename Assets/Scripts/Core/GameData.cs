@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : MonoBehaviour, ISubsystem, IGameState
+public class GameData : MonoBehaviour, ISubsystem, IGameData
 {
-    [SerializeField] private DeckData DeckData;
+    [SerializeField] private DeckData deckData;
     [SerializeField] private DeckData enemyDeck;
     [SerializeField] private MatchData matchData;
 
+
     public DeckData GetDeckData()
     {
-        return DeckData;
+        return deckData;
     }
 
     public DeckData GetEnemyDeckData()

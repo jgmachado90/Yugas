@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameState
+public interface IGameState 
 {
-    DeckData GetDeckData();
-    DeckData GetEnemyDeckData();
+    public IDeckState GetDeckState(bool player);
+    public IHandState GetHandState(bool player);
 
-    MatchData GetMatchData();
+    public IBoardState GetBoardState();
 }

@@ -6,7 +6,7 @@ public class SelectorManager : MonoBehaviour, ISubsystem, ISelectorManager
 {
     private int selectorIndex;
 
-    private IGameState gameState;
+    private IGameData gameData;
     private MatchManager matchManager;
 
     public Action<int> onSelectorMoved;
@@ -15,7 +15,7 @@ public class SelectorManager : MonoBehaviour, ISubsystem, ISelectorManager
 
     private void Start()
     {
-        gameState = SubsystemLocator.GetSubsystem<GameState>();
+        gameData = SubsystemLocator.GetSubsystem<GameData>();
         matchManager = SubsystemLocator.GetSubsystem<MatchManager>();
     }
 
@@ -24,12 +24,12 @@ public class SelectorManager : MonoBehaviour, ISubsystem, ISelectorManager
         if (value < 0)
         {
             selectorIndex--;
-            selectorIndex = selectorIndex < 0 ? gameState.GetMatchData().handLimit - 1 : selectorIndex;
+            selectorIndex = selectorIndex < 0 ? gameData.GetMatchData().handLimit - 1 : selectorIndex;
         }
         else
         {
             selectorIndex++;
-            selectorIndex = selectorIndex > gameState.GetMatchData().handLimit - 1 ? 0 : selectorIndex;
+            selectorIndex = selectorIndex > gameData.GetMatchData().handLimit - 1 ? 0 : selectorIndex;
         }
         onSelectorMoved?.Invoke(selectorIndex);
     }
