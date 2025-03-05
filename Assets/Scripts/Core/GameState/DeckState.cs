@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class DeckState : IDeckState
 {
     public List<CardData> cards = new List<CardData>();
+
+    public event Action<CardData> OnPopCard;
 
     public DeckState(List<CardData> _cards)
     {
@@ -26,6 +29,7 @@ public class DeckState : IDeckState
 
         CardData topCard = cards[cards.Count - 1];
         cards.RemoveAt(cards.Count - 1); // Remove o último elemento
+        OnPopCard?.Invoke(topCard);
         return topCard;
     }
 
@@ -48,7 +52,7 @@ public class DeckState : IDeckState
     {
         for (int i = 0; i < cards.Count; i++)
         {
-            int randomIndex = Random.Range(i, cards.Count);
+            int randomIndex = UnityEngine.Random.Range(i, cards.Count);
             (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
         }
     }

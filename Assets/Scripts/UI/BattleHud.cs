@@ -1,34 +1,30 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using TMPro;
 using UnityEngine;
 
 public class BattleHud : MonoBehaviour
 {
-    MatchManager battleManager;
+    private IStateMachineManager stateMachineManager;
+
+    private IGameState gameState;
 
     public TextMeshProUGUI playerCardCount;
     public TextMeshProUGUI AICardCount;
 
     private void Start()
     {
-        battleManager = SubsystemLocator.GetSubsystem<MatchManager>();
-        battleManager.onDrawCards += UpdateCardCount;
+        gameState = SubsystemLocator.GetSubsystem<IGameState>();
+        stateMachineManager = SubsystemLocator.GetSubsystem<IStateMachineManager>();
+        stateMachineManager.OnMainPhaseInitialize += UpdateCardCount;
     }
 
-    private void UpdateCardCount(IHandState handState, int cards, Turn currentTurn)
+    private void UpdateCardCount()
     {
-        switch (currentTurn)
-        {
-            case Turn.Player:
-            UpdateCardCountAnimation(playerCardCount, cards);
-            break;
-            case Turn.AI:
-            UpdateCardCountAnimation(AICardCount, cards);
-            break;
-        }
+        int playerCount = gameState.GetDeckState(Owner.Player).GetCardCount();
+        int AICount = gameState.GetDeckState(Owner.AI).GetCardCount();
+
+        UpdateCardCountAnimation(playerCardCount, playerCount);
+        UpdateCardCountAnimation(AICardCount, AICount);
+    
     }
 
     private void UpdateCardCountAnimation(TextMeshProUGUI cardCountText, int numCards)

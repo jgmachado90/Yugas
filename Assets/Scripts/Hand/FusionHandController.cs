@@ -19,7 +19,7 @@ public class FusionHandController
 
     private void SelectFusionCardsForPlay(CardData data)
     {
-        handController.PlayFusion(fusionManager.fusionIndexs);
+       // handController.PlayFusion(fusionManager.fusionIndexs);
     }
 
     public void OnDestroy()
@@ -31,13 +31,13 @@ public class FusionHandController
     public void SelectCardForFusion(int index)
     {
         int fusionNumber = fusionManager.fusionIndexs.Count;
-        handController.handCards[index].SelectForFusion(fusionNumber);
+        //handController.GetHandCardByIndex(index).SelectForFusion(fusionNumber);
     }
 
     public void UnSelectCardForFusion(int index)
     {
         int fusionNumber = fusionManager.fusionIndexs.Count;
-        handController.handCards[index].CancelFusionSelection();
+        //handController.GetHandCardByIndex(index).CancelFusionSelection();
 
         ReorderFusionNumbers();
     }
@@ -47,7 +47,7 @@ public class FusionHandController
         for (int i = 0; i < fusions.Count; i++)
         {
             int numb = i + 1;
-            handController.handCards[fusions[i]].fusionNumber.text = numb.ToString();
+           // handController.handCards[fusions[i]].fusionNumber.text = numb.ToString();
         }
     }
 }

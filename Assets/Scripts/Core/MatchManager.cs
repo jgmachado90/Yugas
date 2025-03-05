@@ -1,15 +1,20 @@
 using System;
 using UnityEngine;
 
-public class MatchManager : MonoBehaviour, ISubsystem
+public class MatchManager : MonoBehaviour, ISubsystem, IMatchManager
 {
-    private IStateMachineManager stateMachineManager;
     private IGameData gameData;
     private IGameState gameState;
 
+    private IHandController playerHandController;
+    private IHandController enemyHandController;
+
+    private IPlayActionController playActionController;
+
     private ITurnManager turnManager;
 
-    public Action<IHandState,int, Turn> onDrawCards;
+    private IStateMachineManager stateMachineManager;
+
     public Action<CardData> onSelectCard;
 
     private void Awake()
@@ -17,9 +22,8 @@ public class MatchManager : MonoBehaviour, ISubsystem
         stateMachineManager = SubsystemLocator.GetSubsystem<StateMachineManager>();
         gameData = SubsystemLocator.GetSubsystem<GameData>();
         gameState = SubsystemLocator.GetSubsystem<GameState>();
-
+        turnManager = new TurnManager();
         stateMachineManager.OnMatchInitialize += InitializeMatch;
-        stateMachineManager.OnDrawPhaseInitialize += Draw;
     }
 
     private void OnDestroy()
@@ -30,37 +34,19 @@ public class MatchManager : MonoBehaviour, ISubsystem
 
     private void InitializeMatch(Action complete)
     {
-        turnManager = new TurnManager();
+        playerHandController = new HandController(this, Owner.Player);
+        enemyHandController = new HandController(this, Owner.AI);
         complete?.Invoke();
     }
 
-    private void Draw(Action complete)
+    public ITurnManager GetTurnManager()
     {
-        switch (turnManager.GetCurrentTurn())
-        {
-            case Turn.Player:
-            DrawCards(gameState.GetHandState(true), complete);
-            break;
-            case Turn.AI:
-            DrawCards(gameState.GetHandState(false), complete);
-            break;
-        }
+        return turnManager;
     }
 
-    private void DrawCards(IHandState handState, Action complete)
+    public IHandController GetCurrentHandController()
     {
-        int drawCount = handState.DrawCards();
-        onDrawCards.Invoke(handState, drawCount, turnManager.GetCurrentTurn());
-        complete?.Invoke();
-    }
-
-    public CardData GetCurrentHandCardByIndex(int index)
-    {
-        if(turnManager.GetCurrentTurn() == Turn.Player)
-        {
-            return gameState.GetHandState(true).GetHandCardByIndex(index);
-        }
-        return gameState.GetHandState(false).GetHandCardByIndex(index);
+        return turnManager.GetCurrentTurn() == Owner.Player ? playerHandController : enemyHandController;
     }
 
     public void Initialize()
@@ -69,5 +55,7 @@ public class MatchManager : MonoBehaviour, ISubsystem
 
     public void Shutdown()
     {
+        playerHandController.Shutdown();
+        enemyHandController.Shutdown();
     }
 }

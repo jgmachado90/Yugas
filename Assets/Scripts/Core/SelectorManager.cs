@@ -36,7 +36,8 @@ public class SelectorManager : MonoBehaviour, ISubsystem, ISelectorManager
 
     public CardData GetSelectedCard()
     {
-        return matchManager.GetCurrentHandCardByIndex(selectorIndex);
+        IHandController handController = matchManager.GetCurrentHandController();
+        return handController.GetHandCardByIndex(selectorIndex);
     }
 
     public int GetSelectorIndex()

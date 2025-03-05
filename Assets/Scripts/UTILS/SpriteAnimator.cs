@@ -17,6 +17,16 @@ public class SpriteAnimator : MonoBehaviour
         StartCoroutine(AnimateSprites());
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(AnimateSprites());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private IEnumerator AnimateSprites()
     {
         while (true) // Loop infinito

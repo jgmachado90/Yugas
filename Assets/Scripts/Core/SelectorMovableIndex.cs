@@ -10,12 +10,14 @@ public class SelectorMovableIndex : MonoBehaviour
 
     void Start()
     {
+        gameObject.SetActive(false);
         selectorManager = SubsystemLocator.GetSubsystem<SelectorManager>();
         selectorManager.onSelectorMoved += MoveSelector;
     }
 
     private void MoveSelector(int index)
     {
+        gameObject.SetActive(true);
         Vector3 SelectorPosition = selectorManager.GetCardPositionByIndex(index);
         transform.position = SelectorPosition + selectorOffset;
     }

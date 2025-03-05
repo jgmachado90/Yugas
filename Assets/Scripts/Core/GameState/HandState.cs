@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class HandState : IHandState
 
     IDeckState deck;
 
+    public event Action<CardData, int> OnPullCard;
+
     private List<CardData> hand = new List<CardData>();
 
     public HandState(MatchData matchData, GameState gameState, IDeckState deck)
@@ -18,20 +21,25 @@ public class HandState : IHandState
         this.deck = deck;   
     }
 
-    public int DrawCards()
-    {
-        int count = 0;
-        while (hand.Count < handLimit)
-        {
-            hand.Add(deck.Pop());
-            count++;
-        }
-        return count;
-    }
-
     public CardData GetHandCardByIndex(int index)
     {
         return hand[index];
+    }
+
+    public int GetHandCount()
+    {
+        return hand.Count; 
+    }
+
+    public int GetHandLimit()
+    { 
+        return handLimit;
+    }
+
+    public void AddCardInHand(CardData card)
+    {
+        hand.Add(card);
+        OnPullCard?.Invoke(card, hand.Count-1);
     }
 
 }

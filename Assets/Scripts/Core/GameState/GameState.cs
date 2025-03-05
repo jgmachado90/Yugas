@@ -19,14 +19,14 @@ public class GameState : MonoBehaviour, ISubsystem, IGameState
     public int enemyLifePoints;
 
 
-    public IDeckState GetDeckState(bool player)
+    public IDeckState GetDeckState(Owner owner)
     {
-        return player ? playerDeckState : enemyDeckState;
+        return owner == Owner.Player ? playerDeckState : enemyDeckState;
     }
 
-    public IHandState GetHandState(bool player) 
+    public IHandState GetHandState(Owner owner) 
     {
-        return player ? playerHandState : enemyHandState;
+        return owner == Owner.Player ? playerHandState : enemyHandState;
     }
 
     public IBoardState GetBoardState()

@@ -13,7 +13,13 @@ public class StateMachineManager : MonoBehaviour, ISubsystem, IStateMachineManag
     public event Action OnMainPhaseInitialize;
     public event Action OnBattleInitialize;
 
+
     public void Start()
+    {
+        Invoke("InitializeGame", 1f); 
+    }
+
+    public void InitializeGame()
     {
         StateMachine = new StateMachine();
         StateMachine.ChangeState(new InitialPhase(this));
@@ -21,7 +27,7 @@ public class StateMachineManager : MonoBehaviour, ISubsystem, IStateMachineManag
 
     private void Update()
     {
-        StateMachine.Update();
+        StateMachine?.Update();
     }
 
     public void TriggerMatchInitialization(Action onComplete)

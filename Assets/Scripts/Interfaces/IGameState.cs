@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IGameState 
 {
-    public IDeckState GetDeckState(bool player);
-    public IHandState GetHandState(bool player);
+    public IDeckState GetDeckState(Owner owner);
+    public IHandState GetHandState(Owner owner);
 
     public IBoardState GetBoardState();
 }

@@ -3,32 +3,52 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 
-public class HandController : MonoBehaviour
+public class HandController : IHandController
 {
-    private FusionHandController fusionHandController;
-    private DrawHandController drawHandController;
+    private IMatchManager matchManager;
+    private ITurnManager turnManager;
 
-    [SerializeField] private DropHandCardsAnimator dropHandCardsAnimator;
+    private IStateMachineManager stateMachineManager;
 
-    public DrawCardAnimator drawCardAnimator;
-    public List<HandCard> handCards = new List<HandCard>();
+
+    private IDeckState deckState;
+    private IHandState handState;
+
+    public Owner owner;
 
     public Action<List<HandCard>> onHandFusion;
 
-    private void Start()
+    public HandController(MatchManager matchManager, Owner owner)
     {
-        fusionHandController = new FusionHandController(this);
-        drawHandController = new DrawHandController(this, drawCardAnimator);
-
-        MatchEvents.onSelectCardForPlay += SelectCardForPlay;
+        this.matchManager = matchManager;
+        this.owner = owner;
+        deckState = SubsystemLocator.GetSubsystem<IGameState>().GetDeckState(owner);
+        handState = SubsystemLocator.GetSubsystem<IGameState>().GetHandState(owner);
+        stateMachineManager = SubsystemLocator.GetSubsystem<StateMachineManager>();
+        turnManager = matchManager.GetTurnManager();
+        stateMachineManager.OnDrawPhaseInitialize += DrawCards;
     }
 
-    private void OnDestroy()
+    public void Shutdown(){
+        stateMachineManager.OnDrawPhaseInitialize -= DrawCards;
+    }
+
+    public void DrawCards(Action complete)
     {
-        MatchEvents.onSelectCardForPlay -= SelectCardForPlay;
-        fusionHandController.OnDestroy();
-        drawHandController.OnDestroy();
+        if (!turnManager.IsMyTurn(owner)) return;
+        Debug.Log("DrawPhase Initialize" + owner);
+        int count = 0;
+       
+        while (handState.GetHandCount() < handState.GetHandLimit())
+        {
+            Debug.Log("DrawCard");
+            CardData card = deckState.Pop();
+            handState.AddCardInHand(card);
+            count++;
+        }
+        complete?.Invoke();
     }
 
     public void DiscardCard(int index)
@@ -36,21 +56,8 @@ public class HandController : MonoBehaviour
         //Todo - remove from hand list the card of the current index
     }
 
-    public void SelectCardForPlay(int index)
+    public CardData GetHandCardByIndex(int index)
     {
-        handCards[index].SelectForPlay();
-        List<int> cardsForPlay = new List<int>();
-        cardsForPlay.Add(index);
+        return handState.GetHandCardByIndex(index);
     }
-
-    public void PlayFusion(List<int> indexes)
-    {
-        List<HandCard> fusionHandCards = new List<HandCard>();
-        foreach (int index in indexes)
-        {
-            fusionHandCards.Add(handCards[index]);
-        }
-       // dropHandCardsAnimator.DropHandCards(fusionHandCards);
-    }
-
 }

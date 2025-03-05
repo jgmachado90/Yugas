@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum Turn
+public enum Owner
 {
     Player,
     AI
@@ -12,15 +13,24 @@ public enum Turn
 
 public class TurnManager : ITurnManager
 {
-    public Turn currentTurn = Turn.Player;
+    public Owner currentTurn = Owner.Player;
 
-    public Turn GetCurrentTurn()
+
+    public event Action<Owner> OnTurnChanged;
+
+    public bool IsMyTurn(Owner owner)
+    {
+        return currentTurn == owner ? true : false;
+    }   
+
+    public Owner GetCurrentTurn()
     {
         return currentTurn;
     }
 
     public void NextTurn()
     {
-        currentTurn = (currentTurn == Turn.Player) ? Turn.AI : Turn.Player;
+        currentTurn = (currentTurn == Owner.Player) ? Owner.AI : Owner.Player;
+        OnTurnChanged?.Invoke(currentTurn);
     }
 }

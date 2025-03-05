@@ -4,7 +4,7 @@ public class BoardState : IBoardState
 {
     private CardData[,] boardCards = new CardData[4, 5];
 
-    public void PlayCard(CardData card, int colIndex, Turn whosTurn)
+    public void PlayCard(CardData card, int colIndex, Owner whosTurn)
     {
         bool isCreature = card.cardType != CardType.TrapCard && card.cardType != CardType.SpellCard;
 
@@ -30,9 +30,9 @@ public class BoardState : IBoardState
     }
 
 
-    private int GetBoardRow(Turn whosTurn, bool isCreature)
+    private int GetBoardRow(Owner whosTurn, bool isCreature)
     {
-        if (whosTurn == Turn.Player)
+        if (whosTurn == Owner.Player)
             return isCreature ? 1 : 0;
         else
             return isCreature ? 2 : 3;
